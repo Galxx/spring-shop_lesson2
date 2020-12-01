@@ -12,6 +12,8 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.Route;
 
+import static java.lang.Character.isDigit;
+
 @Route("cart")
 public class CartView extends AbstractView {
 
@@ -50,6 +52,18 @@ public class CartView extends AbstractView {
 
         Button toOrderButton = new Button("Создать заказ", e -> {
             cartService.setAddress(addressField.getValue());
+
+            String phoneString = phoneField.getValue();
+
+            char[] chars = phoneString.toCharArray();
+
+            for (Character c: chars) {
+                 if (!isDigit(c)){
+                     Notification.show("Некорректныий номер телефона");
+                     return;
+                 }
+            }
+
             cartService.setPhone(phoneField.getValue());
             orderService.saveOrder();
 

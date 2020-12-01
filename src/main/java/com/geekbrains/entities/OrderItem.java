@@ -38,8 +38,12 @@ public class OrderItem {
     }
 
     public void decrement() {
-        this.quantity--;
-        this.price = new BigDecimal(this.quantity * product.getPrice().doubleValue());
+
+        if (this.quantity > 1) {
+            this.quantity--;
+            this.price = new BigDecimal(this.quantity * product.getPrice().doubleValue());
+        }
+
     }
 
 }
